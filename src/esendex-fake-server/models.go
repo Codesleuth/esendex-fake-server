@@ -3,13 +3,15 @@ package main
 import (
   "io"
   "fmt"
+  "encoding/json"
 )
 
 type Account struct {
-  ID        string  `param:"id"`
-  Reference string  `param:"reference"`
+  ID        string  `json:"id"`
+  Reference string  `json:"reference"`
 }
 
 func (account Account) Write(w io.Writer) {
-  fmt.Fprintf(w, "{\"id\":\"%s\",\"reference\":\"%s\"}", account.ID, account.Reference)
+  resultJson, _ := json.Marshal(account)
+  fmt.Fprint(w, string(resultJson))
 }
